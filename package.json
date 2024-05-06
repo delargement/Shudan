@@ -30,10 +30,11 @@
     "preact": "^8.4.2 || 10.x"
   },
   "dependencies": {
+    "@delargement/shogi-board": "github:delargement/shogi-board",
+    "@sabaki/go-board": "^1.4.3",
     "classnames": "^2.3.1"
   },
   "devDependencies": {
-    "@sabaki/go-board": "^1.4.2",
     "onchange": "^7.1.0",
     "preact": "^10.5.14",
     "prettier": "^2.7.1",

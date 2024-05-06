@@ -42,25 +42,14 @@ export const signEquals = (...xs) =>
 export function getHoshis(width, height) {
   if (Math.min(width, height) <= 6) return [];
 
-  let [nearX, nearY] = [width, height].map((x) => (x >= 13 ? 3 : 2));
-  let [farX, farY] = [width - nearX - 1, height - nearY - 1];
-  let [middleX, middleY] = [width, height].map((x) => (x - 1) / 2);
 
-  let result = [
-    [nearX, farY],
-    [farX, nearY],
-    [farX, farY],
-    [nearX, nearY],
+    // add mini shogi support later
+  return [
+    [Math.floor(width / 3), Math.floor(height / 3)],
+    [2 * Math.floor(width / 3), Math.floor(height / 3)],
+    [Math.floor(width / 3), 2 * Math.floor(height / 3)],
+    [2 * Math.floor(width / 3), 2 * Math.floor(height / 3)]
   ];
-
-  if (width % 2 !== 0 && height % 2 !== 0 && width !== 7 && height !== 7)
-    result.push([middleX, middleY]);
-  if (width % 2 !== 0 && width !== 7)
-    result.push([middleX, nearY], [middleX, farY]);
-  if (height % 2 !== 0 && height !== 7)
-    result.push([nearX, middleY], [farX, middleY]);
-
-  return result;
 }
 
 export function readjustShifts(shiftMap, vertex = null) {

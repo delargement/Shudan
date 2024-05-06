@@ -10,12 +10,18 @@ const absoluteStyle = (zIndex) => ({
   zIndex,
 });
 
+function piecetocode(piece) {
+    const player = piece.player;
+    const p = piece.piece;
+    return player === -1 ? `1${p}` : `0${p}`
+}
 export default function Vertex(props) {
   let {
     position,
     shift,
     random,
     sign,
+    piece,
     heat,
     paint,
     paintLeft,
@@ -38,6 +44,8 @@ export default function Vertex(props) {
   } = props;
 
   let eventHandlers = {};
+  console.log(piece);
+  console.log(piecetocode(piece));
 
   for (let eventName of vertexEvents) {
     eventHandlers[eventName] = useCallback(
@@ -47,16 +55,6 @@ export default function Vertex(props) {
       [...position, props[`on${eventName}`]]
     );
   }
-
-  let markerMarkup = (zIndex) =>
-    !!marker &&
-    h(Marker, {
-      key: "marker",
-      sign,
-      type: marker.type,
-      label: marker.label,
-      zIndex,
-    });
 
   return h(
     "div",
@@ -106,21 +104,9 @@ export default function Vertex(props) {
         [`on${eventName}`]: eventHandlers[eventName],
       }))
     ),
-
-    !sign && markerMarkup(0),
-    !sign &&
-      !!ghostStone &&
-      h("div", {
-        key: "ghost",
-        className: "shudan-ghost",
-        style: absoluteStyle(1),
-      }),
-
     h(
       "div",
-      { key: "stone", className: "shudan-stone", style: absoluteStyle(2) },
-
-      !!sign &&
+      { key: "stone", className: "shudan-stone", style: absoluteStyle(2), },
         h(
           "div",
           {
@@ -131,12 +117,11 @@ export default function Vertex(props) {
               `shudan-random_${random}`,
               `shudan-sign_${sign}`
             ),
-            style: absoluteStyle(),
+            style: {
+              "background-image": `url(../css/Ryoko_pieces/${piecetocode(piece)}.svg)`,
+            },
           },
-          sign
         ),
-
-      !!sign && markerMarkup()
     ),
 
     (!!paint || !!paintLeft || !!paintRight || !!paintTop || !!paintBottom) &&
@@ -179,28 +164,5 @@ export default function Vertex(props) {
             .join(","),
         },
       }),
-
-    !!selected &&
-      h("div", {
-        key: "selection",
-        className: "shudan-selection",
-        style: absoluteStyle(4),
-      }),
-
-    h("div", {
-      key: "heat",
-      className: "shudan-heat",
-      style: absoluteStyle(5),
-    }),
-    heat?.text != null &&
-      h(
-        "div",
-        {
-          key: "heatlabel",
-          className: "shudan-heatlabel",
-          style: absoluteStyle(6),
-        },
-        heat.text && heat.text.toString()
-      )
   );
 }

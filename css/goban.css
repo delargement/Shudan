@@ -77,7 +77,7 @@
 /* Stone render */
 
 .shudan-vertex .shudan-stone {
-    top: .04em;
+    top: .07em;
     left: .04em;
     width: calc(100% - .08em);
     height: calc(100% - .08em);
@@ -94,21 +94,47 @@
     right: 0;
     bottom: 0;
     border-radius: 50%;
-    background: rgba(23, 10, 2, .4);
-    box-shadow: 0 .1em .2em rgba(23, 10, 2, .4);
+    /*background: rgba(23, 10, 2, .4);*/
+    /*box-shadow: 0 .1em .2em rgba(23, 10, 2, .4);*/
   }
   .shudan-vertex .shudan-inner {
     text-indent: -9999rem;
   }
-  .shudan-vertex:not(.shudan-sign_0).shudan-dimmed .shudan-stone {
-    opacity: .6;
-  }
+  /*.shudan-vertex:not(.shudan-sign_0).shudan-dimmed .shudan-stone {*/
+  /*  opacity: .6;*/
+  /*}*/
   .shudan-stone-image {
+    scale: 1.20;
     background-repeat: no-repeat;
     background-size: 100% 100%;
   }
-  .shudan-stone-image.shudan-sign_1 {
-    background-image: url('./stone_1.svg');
+
+  .shudan-stone-image.shudan-0FU {
+    background-image: url('./Ryoko_pieces/0FU.svg');
+  }
+
+  .shudan-stone-image.shudan-0GI {
+    background-image: url('./Ryoko_pieces/0GI.svg');
+  }
+
+.shudan-stone-image.shudan-0GY {
+  background-image: url("./Ryoko_pieces/0GI.svg");
+}
+
+.shudan-stone-image.shudan-0HI {
+  background-image: url('./Ryoko_pieces/0GI.svg');
+}
+
+.shudan-stone-image.shudan-0KA {
+  background-image: url('./Ryoko_pieces/0GI.svg');
+}
+
+.shudan-stone-image.shudan-0KE {
+    background-image: url('./Ryoko_pieces/0GI.svg');
+  }
+
+.shudan-stone-image.shudan-sign_1 {
+    background-image: url('./Ryoko_pieces/0GI.svg');
   }
   .shudan-stone-image.shudan-sign_-1 {
     background-image: url('./stone_-1.svg');

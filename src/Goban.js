@@ -55,6 +55,7 @@ export default class Goban extends Component {
     let { width, height, rangeX, rangeY, xs, ys, hoshis, shiftMap, randomMap } =
       this.state;
 
+
     let {
       innerProps = {},
       vertexSize = 24,
@@ -62,6 +63,7 @@ export default class Goban extends Component {
       coordY,
       busy,
       signMap,
+      shogiBoard,
       paintMap,
       heatMap,
       markerMap,
@@ -73,6 +75,7 @@ export default class Goban extends Component {
       dimmedVertices = [],
     } = this.props;
 
+    console.log(shogiBoard);
     let animatedVertices = [].concat(
       ...this.state.animatedVertices.map(neighborhood)
     );
@@ -117,8 +120,8 @@ export default class Goban extends Component {
           className: "shudan-content",
           style: {
             position: "relative",
-            width: `${xs.length}em`,
-            height: `${ys.length}em`,
+            width: `${xs.length+1}em`,
+            height: `${(ys.length+1) * 36/33}em`,
             gridRow: showCoordinates ? "2" : "1",
             gridColumn: showCoordinates ? "2" : "1",
           },
@@ -126,26 +129,26 @@ export default class Goban extends Component {
 
         h(Grid, {
           vertexSize,
-          width,
-          height,
-          xs,
-          ys,
+          width: width+1,
+          height: height+1,
+          xs: range(width+1).slice(rangeX[0], rangeX[1] + 1),
+          ys: range(height+1).slice(rangeX[0], rangeX[1] + 1),
           hoshis,
         }),
 
         h(
           "div",
           {
-            className: "shudan-vertices",
+            className: "shudan-faces",
             style: {
               display: "grid",
               gridTemplateColumns: `repeat(${xs.length}, 1em)`,
-              gridTemplateRows: `repeat(${ys.length}, 1em)`,
+              gridTemplateRows: `repeat(${ys.length}, 1.0909em)`,
               position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
+              top: `0.5em`,
+              left: `0.5em`,
+              right: `0.5em`,
+              bottom: `0.5em`,
               zIndex: 1,
             },
           },
@@ -165,6 +168,7 @@ export default class Goban extends Component {
                     shift: fuzzyStonePlacement ? shiftMap?.[y]?.[x] : 0,
                     random: randomMap?.[y]?.[x],
                     sign: signMap?.[y]?.[x],
+                    piece: shogiBoard.get([x,y]),
 
                     heat: heatMap?.[y]?.[x],
                     marker: markerMap?.[y]?.[x],
@@ -300,7 +304,7 @@ Goban.getDerivedStateFromProps = function (props, state) {
     clearAnimatedVerticesHandler: null,
     xs: range(width).slice(rangeX[0], rangeX[1] + 1),
     ys: range(height).slice(rangeY[0], rangeY[1] + 1),
-    hoshis: getHoshis(width, height),
+    hoshis: getHoshis(width+1, height+1),
     shiftMap: readjustShifts(signMap.map((row) => row.map((_) => random(8)))),
     randomMap: signMap.map((row) => row.map((_) => random(4))),
   };
