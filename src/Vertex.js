@@ -3,7 +3,6 @@ import { useCallback } from "preact/hooks";
 import classnames from "classnames";
 
 import { avg, vertexEvents, signEquals } from "./helper.js";
-import Marker from "./Marker.js";
 
 const absoluteStyle = (zIndex) => ({
   position: "absolute",
@@ -44,8 +43,8 @@ export default function Vertex(props) {
   } = props;
 
   let eventHandlers = {};
-  console.log(piece);
-  console.log(piecetocode(piece));
+  // console.log(piece);
+  // console.log(piecetocode(piece));
 
   for (let eventName of vertexEvents) {
     eventHandlers[eventName] = useCallback(
@@ -119,6 +118,7 @@ export default function Vertex(props) {
             ),
             style: {
               "background-image": `url(../css/Ryoko_pieces/${piecetocode(piece)}.svg)`,
+              // backgroundColor: isSelected ? "#FFFFFF" : "rgba(0,0,0,0.37)"
             },
           },
         ),

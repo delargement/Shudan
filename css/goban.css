@@ -100,9 +100,9 @@
   .shudan-vertex .shudan-inner {
     text-indent: -9999rem;
   }
-  /*.shudan-vertex:not(.shudan-sign_0).shudan-dimmed .shudan-stone {*/
-  /*  opacity: .6;*/
-  /*}*/
+  .shudan-vertex .shudan-dimmed .shudan-stone {
+    opacity: .6;
+  }
   .shudan-stone-image {
     scale: 1.20;
     background-repeat: no-repeat;
@@ -456,6 +456,9 @@
 }
 
 /* Lines & arrows */
+.shudan-selected {
+  background: rgba(20,85,30,0.5) ;
+}
 
 .shudan-line,
 .shudan-arrow {

@@ -1,7 +1,7 @@
 import { h, render, Component } from "preact";
 import Board from "@sabaki/go-board";
 import { Goban } from "../src/main.js";
-import ShogiBoard from "@delargement/shogi-board"
+import ShogiBoard from "../../shogi-board/src/ShogiBoard.js"
 
 const chineseCoord = [
   "一",
@@ -196,6 +196,7 @@ class App extends Component {
       showLines: false,
       showSelection: false,
       isBusy: false,
+      vertices: new Map([]),
     };
 
     this.CheckBox = createTwoWayCheckBox(this);
@@ -351,7 +352,7 @@ class App extends Component {
           coordX: alternateCoordinates ? (i) => chineseCoord[i] : undefined,
           coordY: alternateCoordinates ? (i) => i + 1 : undefined,
 
-          shogiBoard: shogiBoard,
+          shogiBoard: this.state.shogiBoard,
           signMap: this.state.board.signMap,
           showCoordinates,
           fuzzyStonePlacement,
@@ -360,6 +361,7 @@ class App extends Component {
           heatMap: showHeatMap && heatMap,
           markerMap: showMarkerMap && markerMap,
           ghostStoneMap: showGhostStones && ghostStoneMap,
+          vertices: this.state.vertices,
 
           lines: showLines
             ? [
@@ -393,12 +395,21 @@ class App extends Component {
                 [10, 8],
               ]
             : [],
+          selectedVertex: this.state.selectedVertex,
 
           onVertexMouseUp: (evt, [x, y]) => {
             let sign = evt.button === 0 ? 1 : -1;
             let newBoard = this.state.board.makeMove(sign, [x, y]);
 
             this.setState({ board: newBoard });
+          },
+          onVertexClick: (evt, [x,y]) => {
+            if (this.state.selectedVertex) {
+              let newBoard = this.state.shogiBoard.makeMove(this.state.selectedVertex,[x,y])
+              this.setState({shogiBoard: newBoard, selectedVertex: null})
+            } else if (this.state.shogiBoard.get([x,y]).piece !== null) {
+              this.setState({selectedVertex: [x,y]});
+            }
           },
         }),
 

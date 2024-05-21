@@ -72,10 +72,13 @@ export default class Goban extends Component {
       showCoordinates = false,
       lines = [],
       selectedVertices = [],
+      selectedVertex = null,
       dimmedVertices = [],
+      vertices,
+
     } = this.props;
 
-    console.log(shogiBoard);
+    // console.log(shogiBoard);
     let animatedVertices = [].concat(
       ...this.state.animatedVertices.map(neighborhood)
     );
@@ -145,10 +148,10 @@ export default class Goban extends Component {
               gridTemplateColumns: `repeat(${xs.length}, 1em)`,
               gridTemplateRows: `repeat(${ys.length}, 1.0909em)`,
               position: "absolute",
-              top: `0.5em`,
+              top: `0.53em`,
               left: `0.5em`,
               right: `0.5em`,
-              bottom: `0.5em`,
+              bottom: `0.53em`,
               zIndex: 1,
             },
           },
@@ -156,9 +159,9 @@ export default class Goban extends Component {
           ys.map((y) =>
             xs.map((x) => {
               let equalsVertex = (v) => vertexEquals(v, [x, y]);
-              let selected = selectedVertices.some(equalsVertex);
+              let selected = selectedVertex && selectedVertex[0] === x && selectedVertex[1] === y
 
-              return h(
+              let v =  h(
                 Vertex,
                 Object.assign(
                   {
@@ -186,7 +189,7 @@ export default class Goban extends Component {
                     paintBottomLeft: paintMap?.[y + 1]?.[x - 1],
                     paintBottomRight: paintMap?.[y + 1]?.[x + 1],
 
-                    selected,
+                    selected: selected,
                     selectedLeft:
                       selected &&
                       selectedVertices.some((v) => vertexEquals(v, [x - 1, y])),
@@ -201,11 +204,14 @@ export default class Goban extends Component {
                       selectedVertices.some((v) => vertexEquals(v, [x, y + 1])),
                   },
 
+
                   ...vertexEvents.map((e) => ({
                     [`on${e}`]: this.props[`onVertex${e}`],
                   }))
                 )
               );
+              vertices.set([x,y].toString(),v)
+              return v;
             })
           )
         ),

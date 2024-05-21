@@ -60,6 +60,7 @@ export interface GobanProps {
   heatMap?: Map<HeatVertex | null>;
 
   selectedVertices?: Vertex[];
+  selectedVertex?: Vertex;
   dimmedVertices?: Vertex[];
   lines?: LineMarker[];
 
